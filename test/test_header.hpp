@@ -24,6 +24,9 @@ Output:
 #ifndef BOOST_UNITS_TEST_HEADER_HPP
 #define BOOST_UNITS_TEST_HEADER_HPP
 
+#ifndef BOOST_TEST_INCLUDED
+#  define BOOST_TEST_INCLUDED
+#endif
 #include <boost/test/minimal.hpp>
 
 #include <boost/units/base_dimension.hpp>
