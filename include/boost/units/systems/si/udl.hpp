@@ -7,8 +7,8 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_UNITS_SYSTEMS_SI_UDL_HPP
-#define BOOST_UNITS_SYSTEMS_SI_UDL_HPP
+#ifndef BOOST_UNITS_SYSTEMS_SI_UDL_HPP_INCLUDED
+#define BOOST_UNITS_SYSTEMS_SI_UDL_HPP_INCLUDED
 
 #include <boost/units/config.hpp>
 
@@ -19,4 +19,4 @@
 
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 
-#endif // BOOST_UNITS_SYSTEMS_SI_UDL_HPP
+#endif // BOOST_UNITS_SYSTEMS_SI_UDL_HPP_INCLUDED

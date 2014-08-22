@@ -7,8 +7,8 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_UNITS_SYSTEMS_SI_UDL_MASS_HPP
-#define BOOST_UNITS_SYSTEMS_SI_UDL_MASS_HPP
+#ifndef BOOST_UNITS_SYSTEMS_SI_UDL_MASS_HPP_INCLUDED
+#define BOOST_UNITS_SYSTEMS_SI_UDL_MASS_HPP_INCLUDED
 
 #include <boost/units/config.hpp>
 
@@ -55,13 +55,13 @@ namespace udl {
     // // make_scaled_unit<dimension, scale<10, static_rational<-3> > >::type,
     // unsigned long long
 // >
-typename multiply_typeof_helper< quantity<si::mass, unsigned long long>, si::mass >::type
-operator"" _g(unsigned long long value)
-{
-    // typedef typename multiply_typeof_helper< quantity<unsigned long long, si::kilogram_instance_t>, si::milli >::type type;
-    return value * si::milli * si::kilogram;
-    // return type::from_value(value);
-}
+// typename multiply_typeof_helper< quantity<si::mass, unsigned long long>, si::mass >::type
+// operator"" _g(unsigned long long value)
+// {
+    // // typedef typename multiply_typeof_helper< quantity<unsigned long long, si::kilogram_instance_t>, si::milli >::type type;
+    // return value * si::milli * si::kilogram;
+    // // return type::from_value(value);
+// }
 
 quantity<si::mass, unsigned long long>
 operator"" _kg(unsigned long long value)
@@ -82,4 +82,4 @@ operator"" _kg(long double value)
 
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 
-#endif // BOOST_UNITS_SYSTEMS_SI_UDL_MASS_HPP
+#endif // BOOST_UNITS_SYSTEMS_SI_UDL_MASS_HPP_INCLUDED

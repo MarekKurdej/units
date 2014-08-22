@@ -26,6 +26,7 @@
 #include <boost/units/detail/dimension_list.hpp>
 #include <boost/units/detail/push_front_if.hpp>
 #include <boost/units/detail/push_front_or_add.hpp>
+#include <boost/units/detail/unscale.hpp>
 
 /// \file 
 /// \brief Core class and metaprogramming utilities for compile-time dimensional analysis.
@@ -318,12 +319,44 @@ struct static_power_impl<0>
     };
 };
 
+template<typename Tag1, typename Tag2>
+struct sridiv_impl
+{
+    template< typename N1, typename N2 > struct apply
+        : mpl::divides<N1, N2>
+    {
+    };
+};
+
+template<
+      typename N1, typename N2
+    >
+struct sridiv
+    : sridiv_impl<
+          typename N1::tag
+        , typename N2::tag
+        >::template apply< N1,N2 >::type
+{
+};
+
+template<typename Tag2>
+struct sridiv_impl< scale_dim_tag, Tag2 >
+{
+    // N1 is scale_list_dim<Scale>
+    // inheriting from Scale = boost::units::scale<Base, StaticRationalExponent> ?
+    template< typename N1, typename N2 > struct apply
+    {
+        typedef typename mpl::divides<typename N1::exponent, N2>::type type;
+    };
+};
+
 template<int N>
 struct static_root_impl {
     template<class Begin, class Ex>
     struct apply {
         typedef list<
-            typename mpl::divides<typename Begin::item, Ex>::type,
+            // typename mpl::divides<typename Begin::item, Ex>::type,
+            typename detail::sridiv<typename Begin::item, Ex>::type,
             typename detail::static_root_impl<N - 1>::template apply<typename Begin::next, Ex>::type
         > type;
     };
