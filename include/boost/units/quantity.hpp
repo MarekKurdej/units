@@ -266,7 +266,7 @@ class quantity
             val_ *= source.value();
             return *this;
         }  
-        
+
         template<class Unit2, class YY>
         this_type& operator/=(const quantity<Unit2, YY>& source)
         {
@@ -275,10 +275,24 @@ class quantity
             return *this;
         }
 
+        // template<class System,class YY>
+        // this_type& operator%=(quantity<BOOST_UNITS_DIMENSIONLESS_UNIT(System),YY>& source)
+        template<class YY>
+        this_type& operator%=(const YY& source)
+        {
+            val_ %= source;
+            // val_ %= source.value();
+            return *this;
+        }
+
         ///< can multiply a quantity by a scalar value_type if multiply_typeof_helper<value_type,value_type>::type is convertible to value_type
         this_type& operator*=(const value_type& source) { val_ *= source; return *this; }
         ///< can divide a quantity by a scalar value_type if divide_typeof_helper<value_type,value_type>::type is convertible to value_type
         this_type& operator/=(const value_type& source) { val_ /= source; return *this; }
+        this_type& operator++() { ++val_; return *this; }
+        this_type operator++(int) { this_type rval = *this; val_++; return rval; }
+        this_type& operator--() { --val_; return *this; }
+        this_type operator--(int) { this_type rval = *this; val_--; return rval; }
     
         /// Construct quantity directly from @c value_type (potentially dangerous).
         static this_type from_value(const value_type& val)  { return this_type(val, 0); }
@@ -1173,6 +1187,16 @@ operator/(const quantity<Unit1,X>& lhs,
                                            quantity<Unit2,Y> >::type   type;
     
     return type::from_value(lhs.value()/rhs.value());
+}
+
+/// runtime operator%
+template <class Unit, class X, class Y>
+inline
+quantity<Unit,X>
+operator%(const quantity<Unit,X>& lhs, const Y& rhs)
+{
+    typedef quantity<Unit,X> type;
+    return type::from_value(lhs.value() % rhs);
 }
 
 /// runtime operator==
