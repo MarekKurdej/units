@@ -20,7 +20,7 @@ Output:
 @endverbatim
 **/
 
-#include <boost/units/systems/si/udl.hpp>
+#include <boost/units/systems/si/literals.hpp>
 #include "test_header.hpp"
 
 #include <boost/units/systems/si/dimensionless.hpp>
@@ -35,7 +35,7 @@ static const double E_ = 2.718281828459045235360287471352662497757;
 int test_main(int,char *[])
 {
 #ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
-    using namespace si::udl; // bring UDLs into scope
+    using namespace si::literals; // bring literals into scope
     const bu::quantity<bu::dimensionless> two(2);
 
     // mass
@@ -62,30 +62,47 @@ int test_main(int,char *[])
     BOOST_CHECK(23_kg == 23 * si::kilogram);
     BOOST_CHECK(1.125_kg == 1.125 * si::kilogram);
 
-    std::cout << "5 g (mkg) = " << 5 * si::milli * si::kilogram << "\n";
-    // std::cout << "5 g (mkg) = " << 2 * si::kilogram + 5 * si::milli * si::kilogram << "\n";
-    const bu::quantity<si::mass> m1 = bu::quantity<si::mass>(5 * si::milli * si::kilogram);
-    std::cout << "5 g (mkg) = " << m1 << "\n";
-    // std::cout << "5 g (mkg) = " << 5_g << "\n";
-    // const bu::quantity<si::mass> m2 = bu::quantity<si::mass>(5_g);
-    // std::cout << "5 g (mkg) = " << m2 << "\n";
+    BOOST_CHECK(2.5_kg == 2.0 * si::kilogram + 0.5 * si::kilogram);
+    // int * int
+    BOOST_CHECK(5_kg * 12_kg == (5 * si::kilogram) * (12 * si::kilogram));
+    BOOST_CHECK(5_kg * 12_kg == 60 * si::kilogram * si::kilogram);
+    // double * double
+    BOOST_CHECK(23.0_kg * 1.5_kg == (23.0 * si::kilogram) * (1.5 * si::kilogram));
+    BOOST_CHECK(23.0_kg * 1.5_kg == 34.5 * si::kilogram * si::kilogram);
+    // int * double
+    BOOST_CHECK(23_kg * 1.5_kg == (23 * si::kilogram) * (1.5 * si::kilogram));
+    BOOST_CHECK(23_kg * 1.5_kg == 34.5 * si::kilogram * si::kilogram);
 
-    std::cout << "60 kg^2 = " << 5_kg * 12_kg << "\n";
-    std::cout << "46 kg^2 = " << (23 * si::kilogram) * (2 * si::kilogram) << "\n";
-    std::cout << "15 kg^2 = " << (5_kg) * (3_kg) << "\n";
-    std::cout << "34.5 kg^2 KK = " << (23 * si::kilogram) * (1.5 * si::kilogram) << "\n";
+    {
+    auto mKK = (23.0 * si::kilogram) * (1.5 * si::kilogram);
+    std::cout << "34.5 kg^2 KK = " << mKK << "\n";
+    auto mKU = (23.0 * si::kilogram) * (1.5_kg);
+    std::cout << "34.5 kg^2 KU = " << mKU << "\n"; // FIXME
+    auto mUU = (23.0_kg) * (1.5_kg);
+    std::cout << "34.5 kg^2 UU = " << mUU << "\n"; // FIXME
+    }
+    
+    {
+    auto mKK = (23 * si::kilogram) * (2 * si::kilogram);
+    std::cout << "46 kg^2 KK = " << mKK << "\n";
+    auto mKU = (23 * si::kilogram) * (2_kg);
+    std::cout << "46 kg^2 KU = " << mKU << "\n";
+    auto mUU = (23_kg) * (2_kg);
+    std::cout << "46 kg^2 UU = " << mUU << "\n";
+    }
+    
+    std::cout << "34.5 kg^2 KK = " << (23.0 * si::kilogram) * (1.5  * si::kilogram) << "\n";
+    std::cout << "34.5 kg^2 KU = " << (23.0 * si::kilogram) * (1.5_kg) << "\n"; // FIXME
+    std::cout << "34.5 kg^2 UU = " << (23.0_kg) * (1.5_kg) << "\n"; // FIXME
+
+    std::cout << "34.5 kg^2 KK = " << (23 * si::kilogram) * (1.5  * si::kilogram) << "\n";
     std::cout << "34.5 kg^2 KU = " << (23 * si::kilogram) * (1.5_kg) << "\n"; // FIXME
-    std::cout << "34.5 kg^2 UK = " << (23_kg) * (1.5 * si::kilogram) << "\n";
     std::cout << "34.5 kg^2 UU = " << (23_kg) * (1.5_kg) << "\n"; // FIXME
 
-    typedef bu::make_scaled_unit<si::mass, bu::scale<10, bu::static_rational<-3> > >::type gram;
-    bu::quantity<gram> t(2.0 * si::milli * si::kilogram);
     BOOST_CHECK(15_g == 15 * si::milli * si::kilogram);
-    // BOOST_CHECK(1.25_g == 1.25 * si::milli * si::kilogram);
+    BOOST_CHECK(1.25_g == 1.25 * si::milli * si::kilogram);
 
-    std::cout << "t     = " << t << "\n";    
-    std::cout << "2_g   = " << 2_g << "\n";    
-    std::cout << "t+2_g = " << t + 2_g << "\n";    
+    BOOST_CHECK(5_g + 12_g == 17 * si::milli * si::kilogram);
 
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 /*
