@@ -51,12 +51,25 @@ operator"" suffix_(long double value)                       \
         >::type                                             \
     )
 
-// mass unit - kilogram - is special - base unit is already scaled as 10^3
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _ng, si::mass, -9 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _ug, si::mass, -6 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _mg, si::mass, -3 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _g,  si::mass,  0 - 3)
-BOOST_UNITS_DEFINE_HELPER(si, _kg, si::mass)
+// mass unit - kilogram - is special - base unit is already scaled as 10^3, so exponent - 3
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _yg, si::mass, -24 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _zg, si::mass, -21 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _ag, si::mass, -18 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _fg, si::mass, -15 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _pg, si::mass, -12 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _ng, si::mass,  -9 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _ug, si::mass,  -6 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _mg, si::mass,  -3 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _g,  si::mass,   0 - 3)
+BOOST_UNITS_DEFINE_HELPER(si, _kg, si::mass)       // 3 - 3
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _t,   si::mass,  6 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _kt,  si::mass,  9 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _Mt,  si::mass, 12 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _Tt,  si::mass, 15 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _Pt,  si::mass, 18 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _Et,  si::mass, 21 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _Zt,  si::mass, 24 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _Yt,  si::mass, 27 - 3)
 
 #undef BOOST_UNITS_DEFINE_HELPER
 #undef BOOST_UNITS_DEFINE_HELPER_SCALED
