@@ -90,7 +90,7 @@ static const double E_ = 2.718281828459045235360287471352662497757;
 using namespace si::literals; // bring literals into scope
 #define FORMATTERS /**/
 
-BOOST_AUTO_TEST_CASE(test_literals_value)
+BOOST_AUTO_TEST_CASE(test_mass_value)
 {
 #ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
     const bu::quantity<si::dimensionless> two(2);
@@ -136,7 +136,7 @@ BOOST_AUTO_TEST_CASE(test_literals_value)
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 }
 
-BOOST_AUTO_TEST_CASE(test_literals_conversion)
+BOOST_AUTO_TEST_CASE(test_mass_conversion)
 {
 #ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
     // int * int
@@ -162,7 +162,7 @@ BOOST_AUTO_TEST_CASE(test_literals_conversion)
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 }
 
-BOOST_AUTO_TEST_CASE(test_literals_output_kg)
+BOOST_AUTO_TEST_CASE(test_mass_output_kg)
 {
 #ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
     // int * int
@@ -185,7 +185,7 @@ BOOST_AUTO_TEST_CASE(test_literals_output_kg)
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 }
 
-BOOST_AUTO_TEST_CASE(test_literals_output_g)
+BOOST_AUTO_TEST_CASE(test_mass_output_g)
 {
 #ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
     // int * int
@@ -197,7 +197,7 @@ BOOST_AUTO_TEST_CASE(test_literals_output_g)
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 }
 
-BOOST_AUTO_TEST_CASE(test_literals_output_mg)
+BOOST_AUTO_TEST_CASE(test_mass_output_mg)
 {
 #ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
     // int * int
@@ -206,6 +206,23 @@ BOOST_AUTO_TEST_CASE(test_literals_output_mg)
     // BOOST_UNITS_TEST_OUTPUT(34.5_mg, "34.5 mg"); // FIXME
     BOOST_UNITS_TEST_OUTPUT(23_mg * 2_mg, "46 p(kg^2)");
     // BOOST_UNITS_TEST_OUTPUT(23.0_mg * 1.5_mg, "34.5 p(kg^2)"); // FIXME
+#endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
+}
+
+BOOST_AUTO_TEST_CASE(test_length_conversion)
+{
+#ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
+    // int * int
+    typedef bu::quantity<si::length> qtype;
+    BOOST_CHECK_EQUAL(qtype(5_m), 5 * si::meter);
+    BOOST_CHECK_EQUAL(qtype(5_km), 5 * 1e3 * si::meter);
+    BOOST_CHECK_EQUAL(qtype(5_Mm), 5 * 1e6 * si::meter);
+    BOOST_CHECK_EQUAL(qtype(5_Gm), 5 * 1e9 * si::meter);
+    BOOST_CHECK_EQUAL(qtype(5_Tm), 5 * 1e12 * si::meter);
+    BOOST_CHECK_EQUAL(qtype(5_Pm), 5 * 1e15 * si::meter);
+    BOOST_CHECK_EQUAL(qtype(5_Em), 5 * 1e18 * si::meter);
+    BOOST_CHECK_EQUAL(qtype(5_Zm), 5 * 1e21 * si::meter);
+    BOOST_CHECK_EQUAL(qtype(5_Ym), 5 * 1e24 * si::meter);
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 }
 
