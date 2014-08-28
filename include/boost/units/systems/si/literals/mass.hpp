@@ -25,7 +25,15 @@ BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _ug, si::mass,  -6 - 3)
 BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _mg, si::mass,  -3 - 3)
 BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _g,  si::mass,   0 - 3)
 BOOST_UNITS_DEFINE_LITERAL(si, _kg, si::mass)       // 3 - 3
-// no Mg, Gg, ... literals, tonnes (t) instead
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Mg,  si::mass,  6 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Gg,  si::mass,  9 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Tg,  si::mass, 12 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Pg,  si::mass, 15 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Eg,  si::mass, 18 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Zg,  si::mass, 21 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Yg,  si::mass, 24 - 3)
+
+// tonnes (t)
 BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _t,   si::mass,  6 - 3)
 BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _kt,  si::mass,  9 - 3)
 BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Mt,  si::mass, 12 - 3)

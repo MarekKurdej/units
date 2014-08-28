@@ -136,6 +136,32 @@ BOOST_AUTO_TEST_CASE(test_literals_value)
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 }
 
+BOOST_AUTO_TEST_CASE(test_literals_conversion)
+{
+#ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
+    // int * int
+    typedef bu::quantity<si::mass> qtype;
+    BOOST_CHECK_EQUAL(qtype(5_kg), 5 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Mg), 5 * 1e3 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Gg), 5 * 1e6 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Tg), 5 * 1e9 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Pg), 5 * 1e12 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Eg), 5 * 1e15 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Zg), 5 * 1e18 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Yg), 5 * 1e21 * si::kilogram);
+
+    BOOST_CHECK_EQUAL(qtype(5_t), 5 * 1e3 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_kt), 5 * 1e6 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Mt), 5 * 1e9 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Gt), 5 * 1e12 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Tt), 5 * 1e15 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Pt), 5 * 1e18 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Et), 5 * 1e21 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Zt), 5 * 1e24 * si::kilogram);
+    BOOST_CHECK_EQUAL(qtype(5_Yt), 5 * 1e27 * si::kilogram);
+#endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
+}
+
 BOOST_AUTO_TEST_CASE(test_literals_output_kg)
 {
 #ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
