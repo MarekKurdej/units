@@ -7,73 +7,31 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef BOOST_UNITS_SYSTEMS_SI_UDL_MASS_HPP
-#define BOOST_UNITS_SYSTEMS_SI_UDL_MASS_HPP
+#ifndef BOOST_UNITS_SYSTEMS_SI_LITERALS_MASS_HPP
+#define BOOST_UNITS_SYSTEMS_SI_LITERALS_MASS_HPP
 
-#include <boost/units/config.hpp>
-
-#ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
-
-#include <boost/units/quantity.hpp>
+#include <boost/units/detail/literals.hpp>
 #include <boost/units/systems/si/mass.hpp>
-#include <boost/units/systems/si/prefixes.hpp>
 
-#define BOOST_UNITS_DEFINE_HELPER(namespace_, suffix_, dimension_)  \
-namespace boost { namespace units {                         \
-namespace namespace_ { namespace literals {                 \
-                                                            \
-quantity<dimension_, unsigned long long>                    \
-operator"" suffix_(unsigned long long value)                \
-{                                                           \
-    typedef quantity<dimension_, unsigned long long> type;  \
-    return type::from_value(value);                         \
-}                                                           \
-                                                            \
-quantity<dimension_, long double>                           \
-operator"" suffix_(long double value)                       \
-{                                                           \
-    typedef quantity<dimension_, long double> type;         \
-    return type::from_value(value);                         \
-}                                                           \
-                                                            \
-}}}} // namespace boost::units::namespace_::literals
+// mass unit, kilogram is special, because base unit is already scaled
+// since 1 kg = 10^3 g, so exponent - 3
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _yg, si::mass, -24 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _zg, si::mass, -21 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _ag, si::mass, -18 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _fg, si::mass, -15 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _pg, si::mass, -12 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _ng, si::mass,  -9 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _ug, si::mass,  -6 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _mg, si::mass,  -3 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _g,  si::mass,   0 - 3)
+BOOST_UNITS_DEFINE_LITERAL(si, _kg, si::mass)       // 3 - 3
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _t,   si::mass,  6 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _kt,  si::mass,  9 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Mt,  si::mass, 12 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Tt,  si::mass, 15 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Pt,  si::mass, 18 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Et,  si::mass, 21 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Zt,  si::mass, 24 - 3)
+BOOST_UNITS_DEFINE_SCALED_LITERAL(si, _Yt,  si::mass, 27 - 3)
 
-#define BOOST_UNITS_DEFINE_HELPER_SCALED(namespace_, suffix_, dimension_, exponent_)    \
-    BOOST_UNITS_DEFINE_HELPER(                              \
-        namespace_,                                         \
-        suffix_,                                            \
-        make_scaled_unit<                                   \
-            dimension_ BOOST_PP_COMMA()                     \
-            scale<                                          \
-                10 BOOST_PP_COMMA()                         \
-                static_rational<exponent_>                  \
-            >                                               \
-        >::type                                             \
-    )
-
-// mass unit - kilogram - is special - base unit is already scaled as 10^3, so exponent - 3
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _yg, si::mass, -24 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _zg, si::mass, -21 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _ag, si::mass, -18 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _fg, si::mass, -15 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _pg, si::mass, -12 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _ng, si::mass,  -9 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _ug, si::mass,  -6 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _mg, si::mass,  -3 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _g,  si::mass,   0 - 3)
-BOOST_UNITS_DEFINE_HELPER(si, _kg, si::mass)       // 3 - 3
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _t,   si::mass,  6 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _kt,  si::mass,  9 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _Mt,  si::mass, 12 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _Tt,  si::mass, 15 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _Pt,  si::mass, 18 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _Et,  si::mass, 21 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _Zt,  si::mass, 24 - 3)
-BOOST_UNITS_DEFINE_HELPER_SCALED(si, _Yt,  si::mass, 27 - 3)
-
-#undef BOOST_UNITS_DEFINE_HELPER
-#undef BOOST_UNITS_DEFINE_HELPER_SCALED
-
-#endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
-
-#endif // BOOST_UNITS_SYSTEMS_SI_UDL_MASS_HPP
+#endif // BOOST_UNITS_SYSTEMS_SI_LITERALS_MASS_HPP
