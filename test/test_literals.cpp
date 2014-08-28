@@ -87,10 +87,12 @@ static const double E_ = 2.718281828459045235360287471352662497757;
 
 #endif
 
+using namespace si::literals; // bring literals into scope
+#define FORMATTERS /**/
+
 BOOST_AUTO_TEST_CASE(test_literals_value)
 {
 #ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
-    using namespace si::literals; // bring literals into scope
     const bu::quantity<si::dimensionless> two(2);
 
     // mass
@@ -137,8 +139,6 @@ BOOST_AUTO_TEST_CASE(test_literals_value)
 BOOST_AUTO_TEST_CASE(test_literals_output_kg)
 {
 #ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
-    using namespace si::literals; // bring literals into scope
-#define FORMATTERS
     // int * int
     BOOST_UNITS_TEST_OUTPUT((23 * si::kilogram) * (2 * si::kilogram), "46 kg^2");
     BOOST_UNITS_TEST_OUTPUT((23_kg) * (2 * si::kilogram), "46 kg^2");
@@ -156,36 +156,31 @@ BOOST_AUTO_TEST_CASE(test_literals_output_kg)
     BOOST_UNITS_TEST_OUTPUT((23_kg) * (1.5 * si::kilogram), "34.5 kg^2");
     // BOOST_UNITS_TEST_OUTPUT((23 * si::kilogram) * (1.5_kg), "34.5 kg^2"); // FIXME
     // BOOST_UNITS_TEST_OUTPUT((23_kg) * (1.5_kg), "34.5 kg^2"); // FIXME
-#undef FORMATTERS
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 }
 
 BOOST_AUTO_TEST_CASE(test_literals_output_g)
 {
 #ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
-    using namespace si::literals; // bring literals into scope
-#define FORMATTERS
     // int * int
     BOOST_UNITS_TEST_OUTPUT(35_g, "35 g");
     BOOST_UNITS_TEST_OUTPUT(35_g + 5_g, "40 g");
     // BOOST_UNITS_TEST_OUTPUT(34.5_g, "34.5 g"); // FIXME
     BOOST_UNITS_TEST_OUTPUT(23_g * 2_g, "46 u(kg^2)");
     // BOOST_UNITS_TEST_OUTPUT(23.0_g * 1.5_g, "34.5 u(kg^2)"); // FIXME
-#undef FORMATTERS
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 }
 
 BOOST_AUTO_TEST_CASE(test_literals_output_mg)
 {
 #ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
-    using namespace si::literals; // bring literals into scope
-#define FORMATTERS
     // int * int
     BOOST_UNITS_TEST_OUTPUT(35_mg, "35 mg");
     BOOST_UNITS_TEST_OUTPUT(35_mg + 5_mg, "40 mg");
     // BOOST_UNITS_TEST_OUTPUT(34.5_mg, "34.5 mg"); // FIXME
     BOOST_UNITS_TEST_OUTPUT(23_mg * 2_mg, "46 p(kg^2)");
     // BOOST_UNITS_TEST_OUTPUT(23.0_mg * 1.5_mg, "34.5 p(kg^2)"); // FIXME
-#undef FORMATTERS
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 }
+
+#undef FORMATTERS
