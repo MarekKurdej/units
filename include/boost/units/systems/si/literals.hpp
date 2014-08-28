@@ -14,6 +14,7 @@
 
 #ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
 
+#include <boost/units/systems/si/literals/length.hpp>
 #include <boost/units/systems/si/literals/mass.hpp>
 // TODO: more
 

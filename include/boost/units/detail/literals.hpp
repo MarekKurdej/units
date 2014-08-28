@@ -51,6 +51,11 @@ operator"" suffix_(long double value)                       \
         >::type                                             \
     )
 
+#else // BOOST_NO_CXX11_USER_DEFINED_LITERALS
+
+#define BOOST_UNITS_DEFINE_LITERAL(namespace_, suffix_, dimension_) /**/
+#define BOOST_UNITS_DEFINE_SCALED_LITERAL(namespace_, suffix_, dimension_, exponent_) /**/
+
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 
 #endif // BOOST_UNITS_DETAIL_LITERALS_HPP
