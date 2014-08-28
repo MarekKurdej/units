@@ -18,94 +18,48 @@
 #include <boost/units/systems/si/mass.hpp>
 #include <boost/units/systems/si/prefixes.hpp>
 
-#define BOOST_UNITS_DEFINE_HELPER(namespace_, suffix, dimension, exponent)          \
-namespace boost { namespace units { namespace namespace_ { namespace literals {     \
+#define BOOST_UNITS_DEFINE_HELPER(namespace_, suffix_, dimension_)  \
+namespace boost { namespace units {                         \
+namespace namespace_ { namespace literals {                 \
                                                             \
-quantity<                                                   \
-    make_scaled_unit<dimension, scale<10, static_rational<exponent> > >::type,      \
-    unsigned long long                                      \
->                                                           \
-operator"" suffix(unsigned long long value)                 \
+quantity<dimension_, unsigned long long>                    \
+operator"" suffix_(unsigned long long value)                \
 {                                                           \
-    typedef quantity<                                       \
-        make_scaled_unit<dimension, scale<10, static_rational<exponent> > >::type,  \
-        unsigned long long                                  \
-    > type;                                                 \
+    typedef quantity<dimension_, unsigned long long> type;  \
     return type::from_value(value);                         \
 }                                                           \
                                                             \
-quantity<                                                   \
-    make_scaled_unit<dimension, scale<10, static_rational<exponent> > >::type,      \
-    long double                                             \
->                                                           \
-operator"" suffix(long double value)                        \
+quantity<dimension_, long double>                           \
+operator"" suffix_(long double value)                       \
 {                                                           \
-    typedef quantity<                                       \
-        make_scaled_unit<dimension, scale<10, static_rational<exponent> > >::type,  \
-        long double                                         \
-    > type;                                                 \
+    typedef quantity<dimension_, long double> type;         \
     return type::from_value(value);                         \
 }                                                           \
                                                             \
 }}}} // namespace boost::units::namespace_::literals
 
-// BOOST_UNITS_DEFINE_HELPER(si, _ng, si::mass, -12)
-// BOOST_UNITS_DEFINE_HELPER(si, _ug, si::mass, -9)
-// BOOST_UNITS_DEFINE_HELPER(si, _mg, si::mass, -6)
-// BOOST_UNITS_DEFINE_HELPER(si, _g,  si::mass, -3)
-// BOOST_UNITS_DEFINE_HELPER(si, _kg, si::mass, 0)
+#define BOOST_UNITS_DEFINE_HELPER_SCALED(namespace_, suffix_, dimension_, exponent_)    \
+    BOOST_UNITS_DEFINE_HELPER(                              \
+        namespace_,                                         \
+        suffix_,                                            \
+        make_scaled_unit<                                   \
+            dimension_ BOOST_PP_COMMA()                     \
+            scale<                                          \
+                10 BOOST_PP_COMMA()                         \
+                static_rational<exponent_>                  \
+            >                                               \
+        >::type                                             \
+    )
+
+// mass unit - kilogram - is special - base unit is already scaled as 10^3
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _ng, si::mass, -9 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _ug, si::mass, -6 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _mg, si::mass, -3 - 3)
+BOOST_UNITS_DEFINE_HELPER_SCALED(si, _g,  si::mass,  0 - 3)
+BOOST_UNITS_DEFINE_HELPER(si, _kg, si::mass)
 
 #undef BOOST_UNITS_DEFINE_HELPER
-
-namespace boost {
-namespace units {
-namespace si {
-namespace literals {
-
-// _g
-quantity<
-    make_scaled_unit<si::mass, scale<10, static_rational<-3> > >::type,
-    unsigned long long
->
-operator"" _g(unsigned long long value)
-{
-    typedef quantity<
-        make_scaled_unit<si::mass, scale<10, static_rational<-3> > >::type,
-        unsigned long long
-    > type;
-    return type::from_value(value);
-}
-
-quantity<
-    make_scaled_unit<si::mass, scale<10, static_rational<-3> > >::type,
-    long double
->
-operator"" _g(long double value)
-{
-    typedef quantity<
-        make_scaled_unit<si::mass, scale<10, static_rational<-3> > >::type,
-        long double
-    > type;
-    return type::from_value(value);
-}
-
-// _kg
-quantity<si::mass, unsigned long long>
-operator"" _kg(unsigned long long value)
-{
-    return value * si::kilogram;
-}
-
-quantity<si::mass, long double>
-operator"" _kg(long double value)
-{
-    return value * si::kilogram;
-}
-
-} // namespace literals
-} // namespace si
-} // namespace units
-} // namespace boost
+#undef BOOST_UNITS_DEFINE_HELPER_SCALED
 
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 

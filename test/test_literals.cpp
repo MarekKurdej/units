@@ -174,3 +174,18 @@ BOOST_AUTO_TEST_CASE(test_literals_output_g)
 #undef FORMATTERS
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 }
+
+BOOST_AUTO_TEST_CASE(test_literals_output_mg)
+{
+#ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
+    using namespace si::literals; // bring literals into scope
+#define FORMATTERS
+    // int * int
+    BOOST_UNITS_TEST_OUTPUT(35_mg, "35 mg");
+    BOOST_UNITS_TEST_OUTPUT(35_mg + 5_mg, "40 mg");
+    // BOOST_UNITS_TEST_OUTPUT(34.5_mg, "34.5 mg"); // FIXME
+    BOOST_UNITS_TEST_OUTPUT(23_mg * 2_mg, "46 p(kg^2)");
+    // BOOST_UNITS_TEST_OUTPUT(23.0_mg * 1.5_mg, "34.5 p(kg^2)"); // FIXME
+#undef FORMATTERS
+#endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
+}
