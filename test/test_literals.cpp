@@ -27,10 +27,61 @@ Output:
 #include <boost/units/systems/si/length.hpp>
 #include <boost/units/systems/si/prefixes.hpp>
 
+#include <sstream>
+
 namespace bu = boost::units;
 namespace si = boost::units::si;
 
 static const double E_ = 2.718281828459045235360287471352662497757;
+
+#ifndef BOOST_NO_CWCHAR
+
+#define BOOST_UNITS_TEST_OUTPUT(v, expected)                \
+{                                                           \
+    std::ostringstream ss;                                  \
+    ss FORMATTERS << v;                                     \
+    BOOST_CHECK_EQUAL(ss.str(), expected);                  \
+}                                                           \
+{                                                           \
+    std::wostringstream ss;                                 \
+    ss FORMATTERS << v;                                     \
+    BOOST_CHECK(ss.str() == BOOST_PP_CAT(L, expected));     \
+}
+
+#define BOOST_UNITS_TEST_OUTPUT_REGEX(v, expected)          \
+{                                                           \
+    std::ostringstream ss;                                  \
+    ss FORMATTERS << v;                                     \
+    boost::regex r(expected);                               \
+    BOOST_CHECK_MESSAGE(boost::regex_match(ss.str(), r),    \
+        ss.str() + " does not match " + expected);          \
+}                                                           \
+{                                                           \
+    std::wostringstream ss;                                 \
+    ss FORMATTERS << v;                                     \
+    boost::wregex r(BOOST_PP_CAT(L, expected));             \
+    BOOST_CHECK(boost::regex_match(ss.str(), r));           \
+}
+
+#else
+
+#define BOOST_UNITS_TEST_OUTPUT(v, expected)                \
+{                                                           \
+    std::ostringstream ss;                                  \
+    ss FORMATTERS << v;                                     \
+    BOOST_CHECK_EQUAL(ss.str(), expected);                  \
+}
+
+#define BOOST_UNITS_TEST_OUTPUT_REGEX(v, expected)          \
+{                                                           \
+    std::ostringstream ss;                                  \
+    ss FORMATTERS << v;                                     \
+    boost::regex r(expected);                               \
+    BOOST_CHECK_MESSAGE(boost::regex_match(ss.str(), r),    \
+        ss.str() + " does not match " + expected);          \
+}
+
+#endif
 
 int test_main(int,char *[])
 {
@@ -103,6 +154,10 @@ int test_main(int,char *[])
     BOOST_CHECK(1.25_g == 1.25 * si::milli * si::kilogram);
 
     BOOST_CHECK(5_g + 12_g == 17 * si::milli * si::kilogram);
+
+    std::cout << "34.5 g = " << 34.5_g << "\n"; // FIXME
+    std::cout << "35 g = " << 35_g << "\n";
+    std::cout << "34.5 g^2 UU = " << (23_g) * (1.5_g) << "\n"; // FIXME
 
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 /*

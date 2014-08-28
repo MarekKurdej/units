@@ -20,24 +20,41 @@
 
 // #define BOOST_UNITS_DEFINE_HELPER_SCALED(suffix, dimension, unit, prefix)
 
-#define BOOST_UNITS_DEFINE_HELPER(suffix, dimension, unit)  \
+#define BOOST_UNITS_DEFINE_HELPER(suffix, dimension, exponent)  \
 namespace boost { namespace units { namespace literals {    \
                                                             \
-quantity<dimension, unsigned long long>                     \
+quantity<                                                   \
+    make_scaled_unit<dimension, scale<10, static_rational<exponent> > >::type,   \
+    unsigned long long                                      \
+>                                                           \
 operator"" suffix(unsigned long long value)                 \
 {                                                           \
-    return (value) * (unit);                                \
+    typedef quantity<                                       \
+        make_scaled_unit<dimension, scale<10, static_rational<exponent> > >::type,   \
+        unsigned long long                                  \
+    > type;                                                 \
+    return type::from_value(value);                         \
 }                                                           \
                                                             \
-quantity<dimension, long double>                            \
+quantity<                                                   \
+    make_scaled_unit<dimension, scale<10, static_rational<exponent> > >::type,   \
+    long double                                             \
+>                                                           \
 operator"" suffix(long double value)                        \
 {                                                           \
-   return (value) * (unit);                                 \
+    typedef quantity<                                       \
+        make_scaled_unit<dimension, scale<10, static_rational<exponent> > >::type,   \
+        long double                                         \
+    > type;                                                 \
+    return type::from_value(value);                         \
 }                                                           \
                                                             \
 }}} // namespace boost::units::literals
 
-// BOOST_UNITS_DEFINE_HELPER(_g, si::mass, si::milli * si::kilogram)
+// BOOST_UNITS_DEFINE_HELPER(_ng, si::mass, -12)
+// BOOST_UNITS_DEFINE_HELPER(_ug, si::mass, -9)
+BOOST_UNITS_DEFINE_HELPER(_mg, si::mass, -6)
+// BOOST_UNITS_DEFINE_HELPER(_g, si::mass, -3)
 // BOOST_UNITS_DEFINE_HELPER_SCALED(_g, si::mass, si::kilogram, si::milli)
 // BOOST_UNITS_DEFINE_HELPER(_kg, si::mass, si::kilogram)
 
@@ -57,19 +74,20 @@ quantity<
     make_scaled_unit<si::mass, scale<10, static_rational<-3> > >::type,
     unsigned long long
 >
-// typename multiply_typeof_helper< quantity<si::mass, unsigned long long>, si::mass >::type
 operator"" _g(unsigned long long value)
 {
-    // typedef typename multiply_typeof_helper< quantity<unsigned long long, si::kilogram_instance_t>, si::milli >::type type;
-    return value * si::milli * si::kilogram;
-    // return type::from_value(value);
+    typedef quantity<
+        make_scaled_unit<si::mass, scale<10, static_rational<-3> > >::type,
+        unsigned long long
+    > type;
+    // return value * si::milli * si::kilogram;
+    return type::from_value(value);
 }
 
 quantity<
     make_scaled_unit<si::mass, scale<10, static_rational<-3> > >::type,
     long double
 >
-// typename multiply_typeof_helper< quantity<si::mass, unsigned long long>, si::mass >::type
 operator"" _g(long double value)
 {
     return value * si::milli * si::kilogram;
