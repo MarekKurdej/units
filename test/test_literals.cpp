@@ -36,6 +36,10 @@ Output:
 namespace bu = boost::units;
 namespace si = boost::units::si;
 
+#ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
+using namespace si::literals; // bring literals into scope
+#endif
+
 static const double E_ = 2.718281828459045235360287471352662497757;
 
 #ifndef BOOST_NO_CWCHAR
@@ -86,9 +90,6 @@ static const double E_ = 2.718281828459045235360287471352662497757;
 }
 
 #endif
-
-using namespace si::literals; // bring literals into scope
-#define FORMATTERS /**/
 
 BOOST_AUTO_TEST_CASE(test_mass_value)
 {
@@ -161,6 +162,8 @@ BOOST_AUTO_TEST_CASE(test_mass_conversion)
     BOOST_CHECK_EQUAL(qtype(5_Yt), 5 * 1e27 * si::kilogram);
 #endif // BOOST_NO_CXX11_USER_DEFINED_LITERALS
 }
+
+#define FORMATTERS /**/
 
 BOOST_AUTO_TEST_CASE(test_mass_output_kg)
 {
