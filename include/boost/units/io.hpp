@@ -667,15 +667,15 @@ struct autoprefix_norm_impl;
 template<class T>
 struct autoprefix_norm_impl<T, true>
 {
-    typedef double type;
-    static double call(const T& arg) { return std::abs(arg); }
+    typedef T type;
+    static type call(const T& arg) { return std::abs(arg); }
 };
 
 template<class T>
 struct autoprefix_norm_impl<T, false>
 {
     typedef one type;
-    static one call(const T&) { return one(); }
+    static type call(const T&) { return one(); }
 };
 
 template<class T>

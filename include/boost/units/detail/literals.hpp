@@ -22,10 +22,10 @@
 namespace boost { namespace units {                         \
 namespace namespace_ { namespace literals {                 \
                                                             \
-quantity<dimension_, unsigned long long>                    \
+quantity<dimension_, long long>                             \
 operator"" suffix_(unsigned long long value)                \
 {                                                           \
-    typedef quantity<dimension_, unsigned long long> type;  \
+    typedef quantity<dimension_, long long> type;           \
     return type::from_value(value);                         \
 }                                                           \
                                                             \
